@@ -8,6 +8,16 @@ namespace Assets._CodeBase.Demos
     {
 
         private List<Vector3> Vertices = new List<Vector3>();
+        private List<Vector2> UVs = new List<Vector2>();
+        private List<int> Triangles = new List<int>();
+
+        private GameObject meshObject;
+
+        private MeshFilter meshFilter;
+        private MeshRenderer meshRenderer;
+        private Mesh mesh;
+
+
         public int Size { get; set; }
         public float Spacing { get; set; }
 
@@ -16,6 +26,7 @@ namespace Assets._CodeBase.Demos
             Size = size + 1;
             Spacing = spacing;
             CreateGrid();
+            CreateMesh();
         }
 
         private void CreateGrid()
@@ -48,20 +59,9 @@ namespace Assets._CodeBase.Demos
                 
             }
 
-
-
-
-
-            foreach (var vertex in Vertices)
-            {
-                GameObject tempGameObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                tempGameObject.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                tempGameObject.transform.position = vertex;
-            }
-
         }
 
-        public void DrawGrid()
+        private void CreateMesh()
         {
             var index = 0;
 
@@ -71,15 +71,15 @@ namespace Assets._CodeBase.Demos
                 {
                     for (int x = 0; x < Size; x++)
                     {
-                        Debug.DrawLine(Vertices[index], Vertices[index + Size]);
-                        Debug.DrawLine(Vertices[index + Size], Vertices[index + Size + 1]);
-                        Debug.DrawLine(Vertices[index + Size + 1], Vertices[index]);
+                        Triangles.Add(index);
+                        Triangles.Add(index + Size);
+                        Triangles.Add(index + Size + 1);
 
                         if (x < Size -1)
                         {
-                            Debug.DrawLine(Vertices[index], Vertices[index + Size + 1]);
-                            Debug.DrawLine(Vertices[index + Size + 1], Vertices[index + 1]);
-                            Debug.DrawLine(Vertices[index + 1], Vertices[index]);
+                            Triangles.Add(index);
+                            Triangles.Add(index + Size + 1);
+                            Triangles.Add(index + 1);
                         }
 
                         index++;
@@ -89,15 +89,15 @@ namespace Assets._CodeBase.Demos
                 {
                     for (int x = 0; x < Size; x++)
                     {
-                        Debug.DrawLine(Vertices[index], Vertices[index + Size + 1]);
-                        Debug.DrawLine(Vertices[index + Size + 1], Vertices[index + 1]);
-                        Debug.DrawLine(Vertices[index + 1], Vertices[index]);
+                        Triangles.Add(index);
+                        Triangles.Add(index + Size + 1);
+                        Triangles.Add(index + 1);
 
                         if (x < Size - 1)
                         {
-                            Debug.DrawLine(Vertices[index + 1], Vertices[index + Size + 1]);
-                            Debug.DrawLine(Vertices[index + Size + 1], Vertices[index + Size + 2]);
-                            Debug.DrawLine(Vertices[index + Size + 2], Vertices[index + 1]);
+                            Triangles.Add(index + 1);
+                            Triangles.Add(index + Size + 1);
+                            Triangles.Add(index + Size + 2);
                         }
 
                         index++;
@@ -105,7 +105,18 @@ namespace Assets._CodeBase.Demos
                     index++;
                 }
             }
-        }
 
+            meshObject = new GameObject("Mesh");
+            meshObject.AddComponent<MeshFilter>();
+            meshObject.AddComponent<MeshRenderer>();
+
+            mesh = new Mesh();
+            mesh.vertices = Vertices.ToArray();
+            mesh.triangles = Triangles.ToArray();
+
+            mesh.RecalculateNormals();
+            meshFilter = meshObject.GetComponent<MeshFilter>() as MeshFilter;
+            meshFilter.mesh = mesh;
+        }
     }
 }
