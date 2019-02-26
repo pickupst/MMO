@@ -5,6 +5,10 @@ namespace Assets._CodeBase.Demos
 {
     public class TerrainDemo : IDemo
     {
+        private TerrainPatch patch;
+        private const int PathSize = 10;
+        private const float PathSpacing = 0.5f;
+
         public void Awake()
         {
             
@@ -22,12 +26,12 @@ namespace Assets._CodeBase.Demos
 
         public void Start()
         {
-            new TerrainPatch(5, 1f);
+            patch = new TerrainPatch(PathSize, PathSpacing);
         }
 
         public void Update()
         {
-            
+            patch.DrawGrid();
         }
     }
 }
