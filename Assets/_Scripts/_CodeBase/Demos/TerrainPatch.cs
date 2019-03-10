@@ -28,6 +28,8 @@ namespace Assets._CodeBase.Demos
 
         private Vector3 position;
 
+        public Vector2 OffSet { get; set; }
+
         public Vector3 Position
         {
             get { return position; }
@@ -50,6 +52,8 @@ namespace Assets._CodeBase.Demos
             {
                 Patches = new List<TerrainPatch>();
             }
+
+            OffSet = new Vector2(pos.x, pos.z);
 
             Position = pos;
 
@@ -188,6 +192,11 @@ namespace Assets._CodeBase.Demos
 
 
 
+        }
+
+        public void Destroy()
+        {
+            GameObject.Destroy(meshObject);
         }
     }
 }

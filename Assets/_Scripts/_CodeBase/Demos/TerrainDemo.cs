@@ -55,14 +55,72 @@ namespace Assets._CodeBase.Demos
                     ScrollUp();
                 }
 
+                if (CurrentPatchLocation.y < lastPatchLocation.y)
+                {
+                    ScrollDown();
+                }
+
+                if (CurrentPatchLocation.x > lastPatchLocation.x)
+                {
+                    ScrollRight();
+                }
+
+                if (CurrentPatchLocation.x < lastPatchLocation.x)
+                {
+                    ScrollLeft();
+                }
+
                 lastPatchLocation = CurrentPatchLocation;
+            }
+
+            for (int i = TerrainPatch.Patches.Count - 1; i >= 0; i--)
+            {
+                var terrainPatch = TerrainPatch.Patches[i];
+                if (Mathf.Abs(CurrentPatchLocation.y - terrainPatch.OffSet.y) > TILE_SIDE_COUNT || Mathf.Abs(CurrentPatchLocation.x - terrainPatch.OffSet.x) > TILE_SIDE_COUNT)
+                {
+                    terrainPatch.Destroy();
+                }
             }
         }
 
         private void ScrollUp()
         {
-            var z = CurrentPatchLocation.y + 1;
-            new TerrainPatch(new Vector3(CurrentPatchLocation.x, 0, z));
+            for (int x = -TILE_SIDE_COUNT; x <= TILE_SIDE_COUNT; x++)
+            {
+                var z = CurrentPatchLocation.y + TILE_SIDE_COUNT;
+                new TerrainPatch(new Vector3(x + CurrentPatchLocation.x, 0, z));
+            }
+        
+        }
+
+        private void ScrollDown()
+        {
+            for (int x = -TILE_SIDE_COUNT; x <= TILE_SIDE_COUNT; x++)
+            {
+                var z = CurrentPatchLocation.y - TILE_SIDE_COUNT;
+                new TerrainPatch(new Vector3(x + CurrentPatchLocation.x, 0, z));
+            }
+
+        }
+
+        private void ScrollRight()
+        {
+            for (int z = -TILE_SIDE_COUNT; z <= TILE_SIDE_COUNT; z++)
+            {
+                var x = CurrentPatchLocation.x + TILE_SIDE_COUNT;
+                new TerrainPatch(new Vector3(x, 0, z + CurrentPatchLocation.y));
+            }
+
+        }
+
+        private void ScrollLeft()
+        {
+            for (int z = -TILE_SIDE_COUNT; z <= TILE_SIDE_COUNT; z++)
+            {
+                var x = CurrentPatchLocation.x - TILE_SIDE_COUNT;
+                new TerrainPatch(new Vector3(x, 0, z + CurrentPatchLocation.y));
+            }
+
         }
 
         private void CreateInitialTerrain()
