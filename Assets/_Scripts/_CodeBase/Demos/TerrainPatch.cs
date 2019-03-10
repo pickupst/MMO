@@ -14,7 +14,7 @@ namespace Assets._CodeBase.Demos
         private GameObject meshObject;
 
         private MeshFilter meshFilter;
-        private MeshRenderer meshRenderer;
+        private Material material;
         private Mesh mesh;
 
 
@@ -25,6 +25,7 @@ namespace Assets._CodeBase.Demos
         {
             Size = size + 1;
             Spacing = spacing;
+            material = Resources.Load("m_UvTest") as Material;
             CreateGrid();
             CreateMesh();
         }
@@ -129,6 +130,9 @@ namespace Assets._CodeBase.Demos
             mesh.RecalculateNormals();
             meshFilter = meshObject.GetComponent<MeshFilter>() as MeshFilter;
             meshFilter.mesh = mesh;
+
+            meshObject.GetComponent<MeshRenderer>().material = material;
+            meshObject.GetComponent<MeshRenderer>().material.mainTextureScale = new Vector2(0.1f * (Size-1), 0.1f * (Size - 1));
         }
     }
 }

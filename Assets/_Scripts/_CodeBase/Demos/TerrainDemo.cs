@@ -7,7 +7,7 @@ namespace Assets._CodeBase.Demos
     {
         private TerrainPatch patch;
         private const int PathSize = 128;
-        private const float PathSpacing = 4f;
+        private const float PathSpacing = 1f;
 
         public void Awake()
         {
