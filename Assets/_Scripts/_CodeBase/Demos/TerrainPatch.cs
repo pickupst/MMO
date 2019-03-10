@@ -36,6 +36,14 @@ namespace Assets._CodeBase.Demos
 
         public static List<TerrainPatch> Patches { get; set; }
 
+        public static float PatchSize
+        {
+            get
+            {
+                return (Size - 1) * Spacing;
+            }
+        }
+
         public TerrainPatch(Vector3 pos)
         {
             if (Patches == null)
