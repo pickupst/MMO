@@ -11,7 +11,7 @@ namespace Assets._CodeBase.Demos
         private const int Size = 49;
         private const float Spacing = 3f;
 
-        //private const float MaxHeight = 1f;
+        public const int MaxHeight = 15;
 
 
         private List<Vector3> vertices = new List<Vector3>();
@@ -88,7 +88,7 @@ namespace Assets._CodeBase.Demos
                 {
                     for (int x = 0; x < Size; x++)
                     {
-                        var height = 0;
+                        var height = TerrainDemo.terrainGenerator.GetHeight(x * Spacing - offSet, z * Spacing - offSet);
                         vertices.Add(new Vector3(x * Spacing - offSet, height, z * Spacing - offSet));
                         var u = (x * Spacing) / ((Size - 1) * Spacing);
                         var v = (z * Spacing) / ((Size - 1) * Spacing);
@@ -106,7 +106,7 @@ namespace Assets._CodeBase.Demos
                         if (posX < 0)   posX = 0;
                         if (posX > (Size - 1) * Spacing)    posX = (Size - 1) * Spacing;
 
-                        var height = 0;
+                        var height = TerrainDemo.terrainGenerator.GetHeight(x * Spacing - offSet, z * Spacing - offSet);
                         vertices.Add(new Vector3(posX - offSet, height, z * Spacing - offSet));
 
                         var u = posX / ((Size - 1) * Spacing);

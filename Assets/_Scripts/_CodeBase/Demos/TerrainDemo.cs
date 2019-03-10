@@ -14,6 +14,8 @@ namespace Assets._CodeBase.Demos
 
         public GameObject TP_Controller;
 
+        public static TerrainGenerator terrainGenerator { get; set; }
+
         public Vector2 CurrentPatchLocation
         {
             get
@@ -26,6 +28,7 @@ namespace Assets._CodeBase.Demos
         public void Awake()
         {
             TP_Controller = GameObject.FindGameObjectWithTag("Player");
+            terrainGenerator = new TerrainGenerator(TerrainPatch.MaxHeight, Resources.Load("uk_original") as Texture2D);
         }
 
         public void OnApplicationQuit()
