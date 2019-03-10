@@ -16,7 +16,9 @@ namespace Assets._CodeBase.Demos
 
         public float GetHeight(float x, float z)
         {
-            var height = baseMap.GetPixel((int)x + baseMap.width / 2, (int)z + baseMap.height / 2).r * maxHeight;
+            var scale = 1024 / (17 * 5 - 4);
+
+            var height = baseMap.GetPixel((int)(scale * x) + baseMap.width / 2, (int)(scale * z) + baseMap.height / 2).r * maxHeight;
             return height;
         }
 

@@ -6,7 +6,7 @@ namespace Assets._CodeBase.Demos
 {
     public class TerrainDemo : IDemo
     {
-        private const int TILE_SIDE_COUNT = 1;
+        private const int TILE_SIDE_COUNT = 2;
 
         private Vector2 lastPatchLocation = Vector2.zero;
 

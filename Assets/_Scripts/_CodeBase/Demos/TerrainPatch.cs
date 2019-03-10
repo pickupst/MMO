@@ -8,10 +8,10 @@ namespace Assets._CodeBase.Demos
     public class TerrainPatch
     {
 
-        private const int Size = 49;
-        private const float Spacing = 3f;
-
-        public const int MaxHeight = 15;
+        private const int Size = 17;
+        private const float Spacing = 1f;
+ 
+        public const int MaxHeight = 3;
 
 
         private List<Vector3> vertices = new List<Vector3>();
@@ -88,7 +88,10 @@ namespace Assets._CodeBase.Demos
                 {
                     for (int x = 0; x < Size; x++)
                     {
-                        var height = TerrainDemo.terrainGenerator.GetHeight(x * Spacing - offSet, z * Spacing - offSet);
+                        var height = TerrainDemo.terrainGenerator.GetHeight(
+                            x * Spacing - offSet + Position.x, 
+                            z * Spacing - offSet + Position.z);
+
                         vertices.Add(new Vector3(x * Spacing - offSet, height, z * Spacing - offSet));
                         var u = (x * Spacing) / ((Size - 1) * Spacing);
                         var v = (z * Spacing) / ((Size - 1) * Spacing);
@@ -106,7 +109,30 @@ namespace Assets._CodeBase.Demos
                         if (posX < 0)   posX = 0;
                         if (posX > (Size - 1) * Spacing)    posX = (Size - 1) * Spacing;
 
-                        var height = TerrainDemo.terrainGenerator.GetHeight(x * Spacing - offSet, z * Spacing - offSet);
+                        var height = 0f;
+                        //var height = TerrainDemo.terrainGenerator.GetHeight(
+                        //    x * Spacing - offSet + Position.x, 
+                        //    z * Spacing - offSet + Position.z);
+
+                        if (posX == 0 || posX == (Size - 1) * Spacing)
+                        {
+                            height = TerrainDemo.terrainGenerator.GetHeight(
+                                            posX * Spacing - offSet + Position.x, 
+                                            z * Spacing - offSet + Position.z);
+                        }
+                        else
+                        {
+                            var h1 = TerrainDemo.terrainGenerator.GetHeight(
+                                            x * Spacing - Spacing - offSet + Position.x,
+                                            z * Spacing - offSet + Position.z);
+
+                            var h2 = TerrainDemo.terrainGenerator.GetHeight(
+                                            x * Spacing - offSet + Position.x,
+                                            z * Spacing - offSet + Position.z);
+
+                            height = Mathf.Lerp(h1, h2, 0.5f);
+                        }
+
                         vertices.Add(new Vector3(posX - offSet, height, z * Spacing - offSet));
 
                         var u = posX / ((Size - 1) * Spacing);
