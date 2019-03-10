@@ -7,7 +7,7 @@ namespace Assets._CodeBase.Demos
 {
     public class TerrainPatch
     {
-        private const float MaxHeight = 3f;
+        private const float MaxHeight = 1f;
 
         private List<Vector3> Vertices = new List<Vector3>();
         private List<Vector2> UVs = new List<Vector2>();
@@ -24,10 +24,22 @@ namespace Assets._CodeBase.Demos
         public int Size { get; set; }
         public float Spacing { get; set; }
 
-        public TerrainPatch(int size, float spacing)
+        private Vector3 position;
+
+        public Vector3 Position
+        {
+            get { return position; }
+            set { position = new Vector3(value.x * (Size - 1) * Spacing, value.y, value.z * (Size - 1) * Spacing); }
+        }
+
+        
+
+        public TerrainPatch(Vector3 pos, int size, float spacing)
         {
             Size = size + 1;
             Spacing = spacing;
+            Position = pos;
+
             material = Resources.Load("m_UvTest") as Material;
             CreateGrid();
             CreateMesh();
@@ -127,6 +139,8 @@ namespace Assets._CodeBase.Demos
             meshObject.AddComponent<MeshFilter>();
             meshObject.AddComponent<MeshRenderer>();
             meshObject.AddComponent<MeshCollider>();
+
+            meshObject.transform.position = position;
 
             mesh = new Mesh();
             mesh.vertices = Vertices.ToArray();
