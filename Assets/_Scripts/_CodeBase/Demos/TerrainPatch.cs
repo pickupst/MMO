@@ -11,7 +11,7 @@ namespace Assets._CodeBase.Demos
         private const int Size = 49;
         private const float Spacing = 3f;
 
-        private const float MaxHeight = 1f;
+        //private const float MaxHeight = 1f;
 
 
         private List<Vector3> vertices = new List<Vector3>();
@@ -68,6 +68,8 @@ namespace Assets._CodeBase.Demos
             vertices.Clear();
             uvs.Clear();
 
+            var offSet = (Size - 1) * Spacing / 2f;
+
             for (int z = 0; z < Size; z++)
             {
                 if (z % 2 == 0)
@@ -75,7 +77,7 @@ namespace Assets._CodeBase.Demos
                     for (int x = 0; x < Size; x++)
                     {
                         var height = 0;
-                        vertices.Add(new Vector3(x * Spacing, height, z * Spacing));
+                        vertices.Add(new Vector3(x * Spacing - offSet, height, z * Spacing - offSet));
                         var u = (x * Spacing) / ((Size - 1) * Spacing);
                         var v = (z * Spacing) / ((Size - 1) * Spacing);
 
@@ -93,7 +95,7 @@ namespace Assets._CodeBase.Demos
                         if (posX > (Size - 1) * Spacing)    posX = (Size - 1) * Spacing;
 
                         var height = 0;
-                        vertices.Add(new Vector3(posX, height, z * Spacing));
+                        vertices.Add(new Vector3(posX - offSet, height, z * Spacing - offSet));
 
                         var u = posX / ((Size - 1) * Spacing);
                         var v = (z * Spacing) / ((Size - 1) * Spacing);
