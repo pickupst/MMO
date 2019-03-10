@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets._CodeBase.Demos
 {
     public class TerrainPatch
     {
+        private const float MaxHeight = 3f;
 
         private List<Vector3> Vertices = new List<Vector3>();
         private List<Vector2> UVs = new List<Vector2>();
@@ -41,7 +43,8 @@ namespace Assets._CodeBase.Demos
                 {
                     for (int x = 0; x < Size; x++)
                     {
-                        Vertices.Add(new Vector3(x * Spacing, 0, z * Spacing));
+                        var height = Random.Range(0, MaxHeight);
+                        Vertices.Add(new Vector3(x * Spacing, height, z * Spacing));
                         var u = (x * Spacing) / ((Size - 1) * Spacing);
                         var v = (z * Spacing) / ((Size - 1) * Spacing);
 
@@ -59,7 +62,8 @@ namespace Assets._CodeBase.Demos
                         if (posX < 0)   posX = 0;
                         if (posX > (Size - 1) * Spacing)    posX = (Size - 1) * Spacing;
 
-                        Vertices.Add(new Vector3(posX, 0, z * Spacing));
+                        var height = Random.Range(0, MaxHeight);
+                        Vertices.Add(new Vector3(posX, height, z * Spacing));
 
                         var u = posX / ((Size - 1) * Spacing);
                         var v = (z * Spacing) / ((Size - 1) * Spacing);
