@@ -16,6 +16,7 @@ namespace Assets._CodeBase.Demos
         private MeshFilter meshFilter;
         private Material material;
         private Mesh mesh;
+        private MeshCollider meshCollider;
 
 
         public int Size { get; set; }
@@ -121,6 +122,7 @@ namespace Assets._CodeBase.Demos
             meshObject = new GameObject("Mesh");
             meshObject.AddComponent<MeshFilter>();
             meshObject.AddComponent<MeshRenderer>();
+            meshObject.AddComponent<MeshCollider>();
 
             mesh = new Mesh();
             mesh.vertices = Vertices.ToArray();
@@ -131,8 +133,13 @@ namespace Assets._CodeBase.Demos
             meshFilter = meshObject.GetComponent<MeshFilter>() as MeshFilter;
             meshFilter.mesh = mesh;
 
+            meshCollider = meshObject.GetComponent<MeshCollider>() as MeshCollider;
+            meshCollider.sharedMesh = mesh;
+
             meshObject.GetComponent<MeshRenderer>().material = material;
             meshObject.GetComponent<MeshRenderer>().material.mainTextureScale = new Vector2(0.1f * (Size-1), 0.1f * (Size - 1));
+
+
         }
     }
 }
