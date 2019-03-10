@@ -40,6 +40,11 @@ namespace Assets._CodeBase.Demos
                     for (int x = 0; x < Size; x++)
                     {
                         Vertices.Add(new Vector3(x * Spacing, 0, z * Spacing));
+                        var u = (x * Spacing) / ((Size - 1) * Spacing);
+                        var v = (z * Spacing) / ((Size - 1) * Spacing);
+
+                        UVs.Add(new Vector2(u, v));
+
                         index++;
                     }
                 }
@@ -53,6 +58,12 @@ namespace Assets._CodeBase.Demos
                         if (posX > (Size - 1) * Spacing)    posX = (Size - 1) * Spacing;
 
                         Vertices.Add(new Vector3(posX, 0, z * Spacing));
+
+                        var u = posX / ((Size - 1) * Spacing);
+                        var v = (z * Spacing) / ((Size - 1) * Spacing);
+
+                        UVs.Add(new Vector2(u, v));
+
                         index++;
                     }
                 }
@@ -112,6 +123,7 @@ namespace Assets._CodeBase.Demos
 
             mesh = new Mesh();
             mesh.vertices = Vertices.ToArray();
+            mesh.uv = UVs.ToArray();
             mesh.triangles = Triangles.ToArray();
 
             mesh.RecalculateNormals();
