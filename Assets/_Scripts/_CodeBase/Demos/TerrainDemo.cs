@@ -8,9 +8,7 @@ namespace Assets._CodeBase.Demos
     {
         private const int PATCH_COUNT = 12;
 
-        private TerrainPatch patch;
-        private const int PathSize = 25;
-        private const float PathSpacing = 1f;
+
 
         public void Awake()
         {
@@ -29,15 +27,8 @@ namespace Assets._CodeBase.Demos
 
         public void Start()
         {
-            for (int z = 0; z < PATCH_COUNT; z++)
-            {
-                for (int x = 0; x < PATCH_COUNT; x++)
-                {
-                    patch = new TerrainPatch(new Vector3(x, 0, z), PathSize, PathSpacing);
-                }
-            }
+            new TerrainPatch(new Vector3(0, 0, 0));
 
-           
         }
 
         public void Update()
