@@ -10,6 +10,8 @@ namespace Assets._CodeBase.Demos
 
         private Vector2 lastPatchLocation = Vector2.zero;
 
+        private int assetSweepCounter = 0;
+
         public GameObject TP_Controller;
 
         public Vector2 CurrentPatchLocation
@@ -43,7 +45,10 @@ namespace Assets._CodeBase.Demos
 
         public void Update()
         {
-            HandleTerrainUpdates();
+            if (TerrainPatch.Patches != null)
+            {
+                HandleTerrainUpdates();
+            }
         }
 
         private void HandleTerrainUpdates()
@@ -79,6 +84,12 @@ namespace Assets._CodeBase.Demos
                 if (Mathf.Abs(CurrentPatchLocation.y - terrainPatch.OffSet.y) > TILE_SIDE_COUNT || Mathf.Abs(CurrentPatchLocation.x - terrainPatch.OffSet.x) > TILE_SIDE_COUNT)
                 {
                     terrainPatch.Destroy();
+                    assetSweepCounter ++;
+                    if (assetSweepCounter >= TILE_SIDE_COUNT * 2 + 1)
+                    {
+                        Resources.UnloadUnusedAssets();
+                        assetSweepCounter = 0;
+                    }
                 }
             }
         }

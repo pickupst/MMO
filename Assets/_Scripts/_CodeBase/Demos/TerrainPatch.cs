@@ -187,7 +187,7 @@ namespace Assets._CodeBase.Demos
 
             meshCollider.sharedMesh = mesh;
 
-            meshObject.GetComponent<MeshRenderer>().material = material;
+            meshObject.GetComponent<MeshRenderer>().sharedMaterial = material;
             meshObject.GetComponent<MeshRenderer>().material.mainTextureScale = new Vector2(0.1f * (Size - 1), 0.1f * (Size - 1));
 
 
@@ -196,7 +196,18 @@ namespace Assets._CodeBase.Demos
 
         public void Destroy()
         {
+            vertices.Clear();
+            uvs.Clear();
+            triangles.Clear();
+            GameObject.Destroy(meshFilter.mesh);
+            GameObject.Destroy(meshCollider.sharedMesh);
+            GameObject.Destroy(mesh);
+            GameObject.Destroy(meshCollider);
+            GameObject.Destroy(meshFilter);
+
             GameObject.Destroy(meshObject);
+
+            Patches.Remove(this);
         }
     }
 }
